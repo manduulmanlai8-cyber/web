@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAN-TECH | Монголын Тэргүүлэх Технологийн Дэлгүүр</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --neon:#00d4ff;--neon2:#0066ff;--neon3:#00ff88;--bg:#050a0f;--bg2:#0a1220;--bg3:#0d1926;
+  --card:#0a1628;--card2:#0f1f35;--border:#1a3a5c;--border2:#00d4ff33;
+  --text:#e8f4fd;--text2:#8ab4cf;--red:#ff3366;--gold:#ffcc00;
+  --font-cyber:'Orbitron',monospace;--font-body:'Rajdhani',sans-serif;--font-mono:'Share Tech Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
+  radial-gradient(ellipse at 20% 50%,rgba(0,100,200,0.05) 0%,transparent 60%),
+  radial-gradient(ellipse at 80% 20%,rgba(0,212,255,0.04) 0%,transparent 50%);
+  pointer-events:none;z-index:0}
+.page{display:none;min-height:100vh;position:relative;z-index:1}
+.page.active{display:block}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(5,10,15,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--font-cyber);font-size:1.5rem;font-weight:900;color:var(--neon);text-shadow:0 0 20px var(--neon);cursor:pointer;letter-spacing:3px}
+.logo span{color:#fff}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.9rem;font-weight:500;letter-spacing:1px;transition:.3s;cursor:pointer;text-transform:uppercase}
+.nav-links a:hover{color:var(--neon);text-shadow:0 0 10px var(--neon)}
+.nav-actions{display:flex;align-items:center;gap:1rem}
+.icon-btn{background:none;border:1px solid var(--border);color:var(--text2);padding:8px 12px;border-radius:6px;cursor:pointer;font-size:0.85rem;transition:.3s;display:flex;align-items:center;gap:6px;font-family:var(--font-body)}
+.icon-btn:hover{border-color:var(--neon);color:var(--neon);box-shadow:0 0 10px rgba(0,212,255,0.2)}
+.cart-badge{background:var(--neon);color:#000;border-radius:50%;width:18px;height:18px;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:6px;font-family:var(--font-body);font-weight:600;font-size:0.9rem;cursor:pointer;transition:.3s;text-decoration:none;border:none;letter-spacing:1px;text-transform:uppercase}
+.btn-primary{background:linear-gradient(135deg,var(--neon2),var(--neon));color:#000;font-weight:700}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,212,255,0.4)}
+.btn-outline{background:transparent;border:1px solid var(--neon);color:var(--neon)}
+.btn-outline:hover{background:rgba(0,212,255,0.1);box-shadow:0 0 15px rgba(0,212,255,0.3)}
+.btn-red{background:linear-gradient(135deg,#cc0033,var(--red));color:#fff}
+.btn-sm{padding:7px 16px;font-size:0.82rem}
+.btn-xs{padding:5px 12px;font-size:0.78rem}
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:repeating-linear-gradient(0deg,transparent,transparent 49px,rgba(0,212,255,0.02) 50px),
+  repeating-linear-gradient(90deg,transparent,transparent 49px,rgba(0,212,255,0.02) 50px);
+  animation:gridMove 20s linear infinite}
+@keyframes gridMove{0%{transform:translate(0,0)}100%{transform:translate(50px,50px)}}
+.hero-content{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,255,0.1);border:1px solid var(--neon);padding:6px 16px;border-radius:30px;font-size:0.8rem;color:var(--neon);letter-spacing:2px;margin-bottom:1.5rem;text-transform:uppercase}
+.hero-badge::before{content:'';width:8px;height:8px;background:var(--neon);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.hero h1{font-family:var(--font-cyber);font-size:3.5rem;font-weight:900;line-height:1.1;margin-bottom:1.5rem}
+.hero h1 .line1{color:#fff}
+.hero h1 .line2{color:var(--neon);text-shadow:0 0 30px var(--neon)}
+.hero p{color:var(--text2);font-size:1.1rem;margin-bottom:2rem;max-width:500px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-visual{position:relative;display:flex;justify-content:center;align-items:center}
+.hero-ring{width:400px;height:400px;border-radius:50%;border:2px solid rgba(0,212,255,0.2);position:absolute;animation:rotate 20s linear infinite}
+.hero-ring:nth-child(2){width:320px;height:320px;border-color:rgba(0,102,255,0.3);animation-duration:15s;animation-direction:reverse}
+.hero-ring:nth-child(3){width:240px;height:240px;border-color:rgba(0,255,136,0.2);animation-duration:10s}
+.hero-device{background:var(--card2);border:2px solid var(--neon);border-radius:16px;padding:2rem;text-align:center;position:relative;z-index:2;width:280px;box-shadow:0 0 60px rgba(0,212,255,0.2)}
+.hero-device-icon{font-size:5rem;margin-bottom:1rem}
+.hero-device h3{font-family:var(--font-cyber);font-size:0.9rem;color:var(--neon);margin-bottom:.5rem}
+.hero-device p{color:var(--text2);font-size:0.8rem}
+.stats-row{display:flex;gap:2rem;margin-top:2.5rem}
+.stat{text-align:center}
+.stat-num{font-family:var(--font-cyber);font-size:1.8rem;font-weight:700;color:var(--neon)}
+.stat-label{color:var(--text2);font-size:0.8rem;letter-spacing:1px}
+@keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.section{padding:5rem 2rem}
+.section-inner{max-width:1400px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:3rem}
+.section-tag{display:inline-block;background:rgba(0,212,255,0.1);border:1px solid var(--border2);color:var(--neon);font-size:0.75rem;letter-spacing:3px;padding:4px 14px;border-radius:20px;margin-bottom:1rem;text-transform:uppercase}
+.section-title{font-family:var(--font-cyber);font-size:2.2rem;font-weight:700;margin-bottom:0.5rem}
+.section-sub{color:var(--text2);font-size:1rem}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:.3s;position:relative}
+.product-card:hover{border-color:var(--neon);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,212,255,0.15)}
+.product-img{height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(135deg,var(--bg2),var(--card2));position:relative;overflow:hidden}
+.badge-discount{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:4px;letter-spacing:1px}
+.badge-new{position:absolute;top:10px;right:10px;background:var(--neon3);color:#000;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:4px}
+.wishlist-btn{position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.6);border:none;color:var(--text2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:.3s}
+.wishlist-btn:hover,.wishlist-btn.active{color:var(--red)}
+.product-info{padding:1.2rem}
+.product-cat{font-size:0.75rem;color:var(--neon);letter-spacing:2px;text-transform:uppercase;margin-bottom:.3rem}
+.product-name{font-size:1rem;font-weight:600;margin-bottom:.5rem;line-height:1.3}
+.product-rating{display:flex;align-items:center;gap:4px;margin-bottom:.7rem}
+.stars{color:var(--gold);font-size:0.85rem}
+.rating-count{color:var(--text2);font-size:0.78rem}
+.product-price{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.price-current{font-family:var(--font-cyber);font-size:1.2rem;font-weight:700;color:var(--neon)}
+.price-old{color:var(--text2);font-size:0.85rem;text-decoration:line-through}
+.product-actions{display:flex;gap:.5rem;margin-top:.8rem}
+.categories-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
+.cat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:.3s}
+.cat-card:hover{border-color:var(--neon);background:rgba(0,212,255,0.05)}
+.cat-icon{font-size:2.5rem;margin-bottom:.7rem}
+.cat-name{font-size:0.85rem;font-weight:600;color:var(--text);letter-spacing:.5px}
+.cat-count{font-size:0.75rem;color:var(--text2);margin-top:.2rem}
+.shop-layout{display:grid;grid-template-columns:260px 1fr;gap:2rem}
+.sidebar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;height:fit-content;position:sticky;top:84px}
+.sidebar h3{font-family:var(--font-cyber);font-size:0.9rem;color:var(--neon);margin-bottom:1rem;letter-spacing:2px;border-bottom:1px solid var(--border);padding-bottom:.7rem}
+.filter-group{margin-bottom:1.5rem}
+.filter-label{font-size:0.85rem;font-weight:600;margin-bottom:.5rem;color:var(--text2);letter-spacing:1px;text-transform:uppercase}
+.filter-item{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;transition:.3s}
+.filter-item:hover{color:var(--neon)}
+.filter-item input[type=checkbox]{accent-color:var(--neon);cursor:pointer}
+.price-range{display:flex;flex-direction:column;gap:.5rem}
+.price-range input[type=range]{width:100%;accent-color:var(--neon);cursor:pointer}
+.price-display{display:flex;justify-content:space-between;font-size:0.82rem;color:var(--neon);font-family:var(--font-mono)}
+.search-bar{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.search-input{flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:8px;font-family:var(--font-body);font-size:0.9rem;transition:.3s;outline:none}
+.search-input:focus{border-color:var(--neon);box-shadow:0 0 10px rgba(0,212,255,0.15)}
+.sort-bar{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.sort-select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:6px;font-family:var(--font-body);cursor:pointer;outline:none}
+.cart-layout{display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start}
+.cart-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;display:flex;gap:1.2rem;align-items:center;margin-bottom:1rem;transition:.3s}
+.cart-item:hover{border-color:var(--border2)}
+.cart-item-img{width:80px;height:80px;background:var(--card2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-weight:600;margin-bottom:.3rem}
+.cart-item-cat{font-size:0.8rem;color:var(--neon);letter-spacing:1px}
+.cart-item-price{font-family:var(--font-cyber);color:var(--neon);font-size:1.1rem;margin-top:.3rem}
+.qty-control{display:flex;align-items:center;gap:.5rem}
+.qty-btn{background:var(--card2);border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:.3s}
+.qty-btn:hover{border-color:var(--neon);color:var(--neon)}
+.qty-num{font-family:var(--font-mono);width:40px;text-align:center;font-size:0.9rem}
+.order-summary{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;position:sticky;top:84px}
+.order-summary h3{font-family:var(--font-cyber);font-size:1rem;margin-bottom:1.2rem;color:var(--neon)}
+.summary-row{display:flex;justify-content:space-between;margin-bottom:.8rem;font-size:0.9rem}
+.summary-row.total{font-family:var(--font-cyber);font-size:1.1rem;color:var(--neon);border-top:1px solid var(--border);padding-top:.8rem;margin-top:.8rem}
+.coupon-row{display:flex;gap:.5rem;margin:1rem 0}
+.coupon-input{flex:1;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-family:var(--font-body);outline:none}
+.checkout-layout{display:grid;grid-template-columns:1fr 360px;gap:2rem}
+.checkout-steps{display:flex;gap:0;margin-bottom:2rem}
+.step{flex:1;text-align:center;padding:.8rem;background:var(--card);border:1px solid var(--border);font-size:0.8rem;letter-spacing:1px;position:relative}
+.step:first-child{border-radius:8px 0 0 8px}
+.step:last-child{border-radius:0 8px 8px 0}
+.step.active{background:rgba(0,212,255,0.15);border-color:var(--neon);color:var(--neon)}
+.step.done{background:rgba(0,255,136,0.1);border-color:var(--neon3);color:var(--neon3)}
+.form-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
+.form-section h3{font-family:var(--font-cyber);font-size:0.9rem;color:var(--neon);margin-bottom:1.2rem;letter-spacing:2px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-label{font-size:0.82rem;color:var(--text2);letter-spacing:.5px}
+.form-input{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:8px;font-family:var(--font-body);font-size:0.9rem;outline:none;transition:.3s}
+.form-input:focus{border-color:var(--neon);box-shadow:0 0 8px rgba(0,212,255,0.15)}
+.form-input::placeholder{color:var(--text2)}
+.form-full{grid-column:1/-1}
+.payment-methods{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.7rem}
+.payment-method{background:var(--card2);border:2px solid var(--border);border-radius:10px;padding:1rem;cursor:pointer;transition:.3s;text-align:center}
+.payment-method:hover,.payment-method.selected{border-color:var(--neon);background:rgba(0,212,255,0.08)}
+.payment-method .pm-icon{font-size:1.8rem;margin-bottom:.3rem}
+.payment-method .pm-name{font-size:0.82rem;font-weight:600}
+.payment-method .pm-bank{font-size:0.72rem;color:var(--text2);margin-top:.1rem}
+.qr-section{background:var(--card);border:1px solid var(--neon);border-radius:12px;padding:1.5rem;text-align:center;margin-top:1rem}
+.qr-box{width:180px;height:180px;background:white;margin:1rem auto;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:4rem}
+.qr-amount{font-family:var(--font-cyber);font-size:1.5rem;color:var(--neon);margin:.5rem 0}
+.auth-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 2rem 2rem}
+.auth-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:2.5rem;width:100%;max-width:440px;box-shadow:0 20px 60px rgba(0,212,255,0.1)}
+.auth-logo{font-family:var(--font-cyber);font-size:1.8rem;font-weight:900;color:var(--neon);text-align:center;margin-bottom:1.5rem}
+.auth-tabs{display:flex;gap:0;margin-bottom:2rem;background:var(--bg2);border-radius:8px;padding:4px}
+.auth-tab{flex:1;text-align:center;padding:.6rem;border-radius:6px;cursor:pointer;font-size:0.9rem;font-weight:500;transition:.3s;color:var(--text2)}
+.auth-tab.active{background:var(--neon);color:#000;font-weight:700}
+.social-login{display:flex;gap:.7rem;margin-top:1.2rem}
+.social-btn{flex:1;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:.7rem;border-radius:8px;cursor:pointer;font-family:var(--font-body);font-size:0.85rem;transition:.3s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.social-btn:hover{border-color:var(--neon)}
+.divider{text-align:center;color:var(--text2);font-size:0.8rem;margin:.8rem 0;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border)}
+.divider::before{left:0}.divider::after{right:0}
+.admin-layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh;padding-top:64px}
+.admin-sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:1.5rem 0;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto}
+.admin-menu{list-style:none}
+.admin-menu-item{padding:.7rem 1.5rem;cursor:pointer;transition:.3s;display:flex;align-items:center;gap:.8rem;font-size:0.9rem;color:var(--text2);border-left:3px solid transparent}
+.admin-menu-item:hover,.admin-menu-item.active{color:var(--neon);background:rgba(0,212,255,0.05);border-left-color:var(--neon)}
+.admin-menu-icon{font-size:1.1rem;width:24px;text-align:center}
+.admin-content{padding:2rem;overflow-y:auto}
+.admin-section{display:none}
+.admin-section.active{display:block}
+.stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;position:relative;overflow:hidden}
+.stat-card::after{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;border-radius:50%;background:rgba(0,212,255,0.05)}
+.stat-card-num{font-family:var(--font-cyber);font-size:1.8rem;font-weight:700;color:var(--neon)}
+.stat-card-label{font-size:0.82rem;color:var(--text2);margin-top:.3rem}
+.stat-card-change{font-size:0.78rem;color:var(--neon3);margin-top:.5rem}
+.admin-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+.admin-table th{background:var(--bg2);color:var(--text2);padding:.8rem 1rem;text-align:left;font-weight:600;letter-spacing:.5px;font-size:0.8rem;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.admin-table td{padding:.8rem 1rem;border-bottom:1px solid rgba(26,58,92,0.5);transition:.3s}
+.admin-table tr:hover td{background:rgba(0,212,255,0.03)}
+.status-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;letter-spacing:.5px}
+.status-active{background:rgba(0,255,136,0.15);color:var(--neon3);border:1px solid rgba(0,255,136,0.3)}
+.status-pending{background:rgba(255,204,0,0.15);color:var(--gold);border:1px solid rgba(255,204,0,0.3)}
+.status-inactive{background:rgba(255,51,102,0.15);color:var(--red);border:1px solid rgba(255,51,102,0.3)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:2rem;width:100%;max-width:560px;max-height:85vh;overflow-y:auto}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.modal-title{font-family:var(--font-cyber);font-size:1.1rem;color:var(--neon)}
+.modal-close{background:none;border:none;color:var(--text2);font-size:1.5rem;cursor:pointer;line-height:1;padding:4px}
+.modal-close:hover{color:var(--red)}
+.profile-layout{display:grid;grid-template-columns:280px 1fr;gap:2rem;padding-top:84px}
+.profile-sidebar{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;height:fit-content}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--neon2),var(--neon));display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1rem;border:3px solid var(--neon);box-shadow:0 0 20px rgba(0,212,255,0.3)}
+.profile-name{text-align:center;font-family:var(--font-cyber);font-size:1.1rem;margin-bottom:.2rem}
+.profile-email{text-align:center;color:var(--text2);font-size:0.82rem;margin-bottom:1.5rem}
+.profile-menu{list-style:none}
+.profile-menu li{padding:.6rem 0;cursor:pointer;border-bottom:1px solid rgba(26,58,92,0.5);font-size:0.9rem;transition:.3s;color:var(--text2);display:flex;align-items:center;gap:.6rem}
+.profile-menu li:hover{color:var(--neon)}
+.profile-menu li.active{color:var(--neon)}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.contact-info-cards{display:flex;flex-direction:column;gap:1rem}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;display:flex;gap:1rem;align-items:center}
+.contact-icon{font-size:2rem;width:52px;height:52px;background:rgba(0,212,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-card h4{font-weight:600;margin-bottom:.2rem}
+.contact-card p{color:var(--text2);font-size:0.88rem}
+.product-detail{display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding-top:84px}
+.product-gallery{background:var(--card);border:1px solid var(--border);border-radius:12px;height:450px;display:flex;align-items:center;justify-content:center;font-size:9rem;position:relative;overflow:hidden}
+.product-gallery::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,212,255,0.05),transparent)}
+.product-detail-info{padding-top:1rem}
+.breadcrumb{display:flex;gap:.5rem;align-items:center;font-size:0.82rem;color:var(--text2);margin-bottom:1.5rem}
+.breadcrumb a{color:var(--text2);cursor:pointer;transition:.3s}
+.breadcrumb a:hover{color:var(--neon)}
+.breadcrumb span{color:var(--text2)}
+.product-detail-name{font-family:var(--font-cyber);font-size:1.8rem;font-weight:700;line-height:1.2;margin-bottom:1rem}
+.product-detail-price{font-family:var(--font-cyber);font-size:2.2rem;font-weight:700;color:var(--neon);margin-bottom:.5rem}
+.product-detail-price-old{color:var(--text2);font-size:1rem;text-decoration:line-through;margin-bottom:1.5rem}
+.product-features{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:1.5rem 0}
+.feature-item{display:flex;align-items:center;gap:.5rem;font-size:0.88rem;color:var(--text2)}
+.feature-item::before{content:'✓';color:var(--neon3);font-weight:700}
+.stock-indicator{display:inline-flex;align-items:center;gap:.5rem;font-size:0.85rem;margin-bottom:1rem}
+.stock-dot{width:8px;height:8px;border-radius:50%;background:var(--neon3)}
+.qty-section{display:flex;align-items:center;gap:1rem;margin:1.5rem 0}
+.tabs{border-bottom:1px solid var(--border);display:flex;gap:0;margin-top:3rem}
+.tab{padding:.8rem 1.5rem;cursor:pointer;font-size:0.9rem;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.3s;font-weight:500}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--neon);border-bottom-color:var(--neon)}
+.tab-content{display:none;padding:1.5rem 0}
+.tab-content.active{display:block}
+.review-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;margin-bottom:1rem}
+.review-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.review-author{font-weight:600;font-size:0.9rem}
+.review-date{font-size:0.78rem;color:var(--text2)}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2rem 1.5rem}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2rem}
+.footer-brand h3{font-family:var(--font-cyber);font-size:1.3rem;color:var(--neon);margin-bottom:.8rem}
+.footer-brand p{color:var(--text2);font-size:0.88rem;line-height:1.7;max-width:280px}
+.footer-col h4{font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;color:var(--text)}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.footer-col ul li a{color:var(--text2);text-decoration:none;font-size:0.88rem;transition:.3s;cursor:pointer}
+.footer-col ul li a:hover{color:var(--neon)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;color:var(--text2)}
+.social-links{display:flex;gap:.8rem}
+.social-link{width:36px;height:36px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.3s;font-size:1rem}
+.social-link:hover{border-color:var(--neon);color:var(--neon)}
+.newsletter-form{display:flex;gap:.5rem;margin-top:1rem}
+.newsletter-input{flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:6px;font-family:var(--font-body);outline:none;font-size:0.85rem}
+.newsletter-input:focus{border-color:var(--neon)}
+.brands-row{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;align-items:center;padding:2rem 0}
+.brand-logo{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.7rem 1.5rem;font-family:var(--font-cyber);font-size:0.8rem;color:var(--text2);letter-spacing:2px;transition:.3s;cursor:pointer}
+.brand-logo:hover{border-color:var(--neon);color:var(--neon)}
+.gaming-setup{background:linear-gradient(135deg,var(--bg2),var(--bg));border:1px solid var(--border2);border-radius:16px;padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;overflow:hidden;position:relative}
+.gaming-setup::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,102,255,0.1),transparent);pointer-events:none}
+.gaming-setup-img{font-size:8rem;text-align:center;position:relative}
+.glow-text{color:var(--neon);text-shadow:0 0 20px var(--neon),0 0 60px rgba(0,212,255,0.4)}
+.notification{position:fixed;bottom:2rem;right:2rem;background:var(--card2);border:1px solid var(--neon);border-radius:10px;padding:1rem 1.5rem;z-index:3000;display:flex;align-items:center;gap:.8rem;font-size:0.9rem;max-width:350px;transform:translateX(400px);transition:.4s;box-shadow:0 8px 30px rgba(0,212,255,0.2)}
+.notification.show{transform:translateX(0)}
+.notification-icon{font-size:1.3rem}
+.tag{display:inline-block;background:rgba(0,212,255,0.1);border:1px solid var(--border2);color:var(--neon);font-size:0.72rem;padding:2px 10px;border-radius:20px;letter-spacing:1px}
+.loading-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s}
+.loading-screen.hidden{opacity:0;pointer-events:none}
+.loader-logo{font-family:var(--font-cyber);font-size:3rem;font-weight:900;color:var(--neon);text-shadow:0 0 40px var(--neon);animation:flicker 2s infinite}
+@keyframes flicker{0%,100%{opacity:1}50%{opacity:.8}48%{opacity:.3}52%{opacity:.9}}
+.loader-bar{width:300px;height:3px;background:var(--border);border-radius:2px;margin-top:2rem;overflow:hidden}
+.loader-fill{height:100%;background:linear-gradient(90deg,var(--neon2),var(--neon));animation:fill 1.5s ease-out forwards}
+@keyframes fill{from{width:0}to{width:100%}}
+.loader-text{font-family:var(--font-mono);font-size:0.8rem;color:var(--text2);margin-top:1rem}
+.page-header{padding:100px 2rem 2rem;background:linear-gradient(180deg,rgba(0,102,255,0.05),transparent)}
+.page-header-inner{max-width:1400px;margin:0 auto}
+.page-header h1{font-family:var(--font-cyber);font-size:2rem;font-weight:700}
+.page-header p{color:var(--text2);margin-top:.3rem}
+.neon-border{border:1px solid var(--neon);box-shadow:0 0 15px rgba(0,212,255,0.2),inset 0 0 15px rgba(0,212,255,0.05)}
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;text-align:center}
+  .hero-visual{display:none}
+  .shop-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .cart-layout{grid-template-columns:1fr}
+  .checkout-layout{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr}
+  .product-detail{grid-template-columns:1fr}
+  .admin-layout{grid-template-columns:1fr}
+  .admin-sidebar{position:static;height:auto}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .stat-cards{grid-template-columns:1fr 1fr}
+  .gaming-setup{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="loader-logo">MAN-TECH</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-text" id="loaderText">Систем ачааллаж байна...</div>
+</div>
+
+<div class="notification" id="notification">
+  <span class="notification-icon" id="notifIcon">✅</span>
+  <span id="notifMsg">Бараа сагсанд нэмэгдлээ!</span>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="navigate('home')">MAN<span>-</span>TECH</div>
+    <ul class="nav-links">
+      <li><a onclick="navigate('home')">Нүүр</a></li>
+      <li><a onclick="navigate('shop')">Дэлгүүр</a></li>
+      <li><a onclick="navigate('contact')">Холбоо барих</a></li>
+      <li><a onclick="navigate('admin')" style="color:var(--gold)">⚡ Admin</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="navigate('login')">👤 Нэвтрэх</button>
+      <button class="icon-btn" onclick="navigate('cart')">🛒 <span class="cart-badge" id="cartBadge">0</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-content">
+      <div>
+        <div class="hero-badge">🚀 Монголын №1 Тех Дэлгүүр</div>
+        <h1>
+          <div class="line1">ТЭРГҮҮЛЭХ</div>
+          <div class="line2">ТЕХНОЛОГИ</div>
+          <div class="line1">ДЭЛГҮҮР</div>
+        </h1>
+        <p>Монголд хамгийн орчин үеийн гейминг тоног төхөөрөмж, PC хэсгүүд болон технологийн бараануудыг авах хамгийн сайн газар.</p>
+        <div class="hero-btns">
+          <button class="btn btn-primary" onclick="navigate('shop')">🛍️ Дэлгүүрлэх</button>
+          <button class="btn btn-outline" onclick="navigate('shop')">🎮 Гейминг</button>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><div class="stat-num">5,000+</div><div class="stat-label">Бүтээгдэхүүн</div></div>
+          <div class="stat"><div class="stat-num">20,000+</div><div class="stat-label">Хэрэглэгч</div></div>
+          <div class="stat"><div class="stat-num">99%</div><div class="stat-label">Баталгаат чанар</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-device">
+          <div class="hero-device-icon">🖥️</div>
+          <h3>GAMING PRO X</h3>
+          <p>240Hz | 4K | HDR</p>
+          <div style="color:var(--neon);font-family:var(--font-cyber);font-size:1.1rem;margin-top:.7rem">₮ 3,500,000</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Ангилал</div>
+        <h2 class="section-title">Бүх Категориуд</h2>
+      </div>
+      <div class="categories-grid" id="categoriesGrid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Онцлох</div>
+        <h2 class="section-title">Онцлох Бүтээгдэхүүнүүд</h2>
+        <p class="section-sub">Хамгийн эрэлттэй бараануудаас сонго</p>
+      </div>
+      <div class="products-grid" id="featuredProducts"></div>
+      <div style="text-align:center;margin-top:2rem">
+        <button class="btn btn-outline" onclick="navigate('shop')">Бүгдийг харах →</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="gaming-setup neon-border">
+        <div>
+          <div class="section-tag">Ultimate Setup</div>
+          <h2 class="section-title" style="text-align:left">Хамгийн Сайн<br><span class="glow-text">Гейминг Тохиргоо</span></h2>
+          <p style="color:var(--text2);margin:1rem 0 1.5rem">Мэргэжлийн геймерийн шаардлагыг хангасан бүрэн гүйцэд тохиргоог бидэнтэй бүтээ.</p>
+          <div class="product-features">
+            <div class="feature-item">Pro Gaming Monitor</div>
+            <div class="feature-item">Механик Гарын самбар</div>
+            <div class="feature-item">Gaming Mouse & Pad</div>
+            <div class="feature-item">7.1 Surround Headset</div>
+            <div class="feature-item">RGB Case & Cooling</div>
+            <div class="feature-item">RTX GPU Series</div>
+          </div>
+          <button class="btn btn-primary" onclick="navigate('shop')">Тохиргоо бүтээх</button>
+        </div>
+        <div class="gaming-setup-img"><div style="font-size:6rem;line-height:1.2">🎮<br>⌨️🖱️</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Trending</div>
+        <h2 class="section-title">🔥 Хамгийн Их Зарагдаж Буй</h2>
+      </div>
+      <div class="products-grid" id="trendingProducts"></div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Брэндүүд</div>
+        <h2 class="section-title">Манай Брэнд Партнерууд</h2>
+      </div>
+      <div class="brands-row">
+        <div class="brand-logo">ASUS ROG</div>
+        <div class="brand-logo">CORSAIR</div>
+        <div class="brand-logo">LOGITECH G</div>
+        <div class="brand-logo">RAZER</div>
+        <div class="brand-logo">NVIDIA</div>
+        <div class="brand-logo">AMD RYZEN</div>
+        <div class="brand-logo">SAMSUNG</div>
+        <div class="brand-logo">SONY</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner" style="max-width:600px;text-align:center">
+      <div class="section-tag">Newsletter</div>
+      <h2 class="section-title">Мэдээлэл Авах</h2>
+      <p class="section-sub" style="margin-bottom:1.5rem">Шинэ бараа, хямдрал болон тусгай санал хүлээн авна уу</p>
+      <div class="newsletter-form" style="max-width:400px;margin:0 auto">
+        <input type="email" class="newsletter-input" placeholder="И-мэйл хаяг оруулна уу">
+        <button class="btn btn-primary" onclick="showNotif('📧 Амжилттай бүртгэгдлээ!','✅')">Бүртгүүлэх</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>MAN-TECH</h3>
+          <p>Монголын тэргүүлэх технологийн онлайн дэлгүүр. Гейминг, PC, болон бусад техник хэрэгслийг хамгийн сайн үнээр авах боломж.</p>
+          <div class="social-links" style="margin-top:1rem">
+            <div class="social-link">📘</div>
+            <div class="social-link">📸</div>
+            <div class="social-link">🐦</div>
+            <div class="social-link">📺</div>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Дэлгүүр</h4>
+          <ul><li><a onclick="navigate('shop')">Бүх бараа</a></li><li><a>Гейминг</a></li><li><a>PC хэсгүүд</a></li><li><a>Дижитал</a></li></ul>
+        </div>
+        <div class="footer-col">
+          <h4>Хэрэглэгч</h4>
+          <ul><li><a onclick="navigate('profile')">Профайл</a></li><li><a onclick="navigate('cart')">Сагс</a></li><li><a>Захиалга</a></li><li><a>Хүсэлтийн жагсаалт</a></li></ul>
+        </div>
+        <div class="footer-col">
+          <h4>Мэдээлэл</h4>
+          <ul><li><a onclick="navigate('contact')">Холбоо барих</a></li><li><a>Хүргэлт</a></li><li><a>Баталгаа</a></li><li><a>Нууцлал</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2024 MAN-TECH Mongolia. Бүх эрх хуулиар хамгаалагдсан.</span>
+        <span style="color:var(--neon);font-family:var(--font-mono)">Улаанбаатар, Монгол</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- SHOP PAGE -->
+<div class="page" id="page-shop">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <h1>🛍️ Дэлгүүр</h1>
+      <p>Хамгийн сайн технологийн бараануудыг нээж олоорой</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <div class="search-bar">
+        <input class="search-input" placeholder="🔍 Бараа хайх..." id="shopSearch" oninput="filterProducts()">
+        <button class="btn btn-primary" onclick="filterProducts()">Хайх</button>
+      </div>
+      <div class="sort-bar">
+        <span style="color:var(--text2);font-size:0.85rem">Эрэмбэлэх:</span>
+        <select class="sort-select" onchange="filterProducts()" id="sortSelect">
+          <option value="default">Үндсэн</option>
+          <option value="price-asc">Үнэ: Өсөхөөр</option>
+          <option value="price-desc">Үнэ: Буурахаар</option>
+          <option value="rating">Үнэлгээ</option>
+          <option value="new">Шинэ</option>
+        </select>
+        <span style="color:var(--text2);font-size:0.85rem" id="resultCount">0 бараа</span>
+      </div>
+      <div class="shop-layout">
+        <div class="sidebar">
+          <h3>Шүүлтүүр</h3>
+          <div class="filter-group">
+            <div class="filter-label">Категори</div>
+            <div id="catFilters"></div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-label">Үнийн дүр</div>
+            <div class="price-range">
+              <input type="range" min="0" max="5000000" step="50000" value="5000000" id="priceRange" oninput="updatePriceDisplay();filterProducts()">
+              <div class="price-display"><span>₮0</span><span id="priceMax">₮5,000,000</span></div>
+            </div>
+          </div>
+          <div class="filter-group">
+            <div class="filter-label">Үнэлгээ</div>
+            <div id="ratingFilters">
+              <div class="filter-item"><input type="radio" name="rating" value="0" checked onchange="filterProducts()"> Бүгд</div>
+              <div class="filter-item"><input type="radio" name="rating" value="4" onchange="filterProducts()"> ⭐⭐⭐⭐+</div>
+              <div class="filter-item"><input type="radio" name="rating" value="3" onchange="filterProducts()"> ⭐⭐⭐+</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="resetFilters()" style="width:100%;margin-top:.5rem">Шүүлтүүр арилгах</button>
+        </div>
+        <div class="products-grid" id="shopProducts"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL PAGE -->
+<div class="page" id="page-product">
+  <div class="section">
+    <div class="section-inner">
+      <div class="product-detail" id="productDetailContent"></div>
+      <div class="tabs" id="productTabs" style="margin-top:2rem">
+        <div class="tab active" onclick="switchTab('desc')">Тайлбар</div>
+        <div class="tab" onclick="switchTab('spec')">Техникийн үзүүлэлт</div>
+        <div class="tab" onclick="switchTab('reviews')">Үнэлгээ (12)</div>
+      </div>
+      <div class="tab-content active" id="tab-desc"><p style="color:var(--text2);line-height:1.8" id="productDesc"></p></div>
+      <div class="tab-content" id="tab-spec"><div id="productSpec" style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem"></div></div>
+      <div class="tab-content" id="tab-reviews">
+        <div id="productReviews"></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-top:1rem">
+          <h4 style="margin-bottom:1rem;font-family:var(--font-cyber);font-size:.9rem;color:var(--neon)">Үнэлгээ нэмэх</h4>
+          <div class="form-group" style="margin-bottom:1rem">
+            <label class="form-label">Тайлбар</label>
+            <textarea class="form-input" rows="3" placeholder="Таны тайлбар..." style="resize:vertical"></textarea>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="showNotif('Үнэлгээ нэмэгдлээ!','⭐')">Нийтлэх</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART PAGE -->
+<div class="page" id="page-cart">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <h1>🛒 Миний Сагс</h1>
+      <p>Захиалгаа баталгаажуулна уу</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <div class="cart-layout">
+        <div>
+          <div id="cartItems">
+            <div style="text-align:center;padding:4rem;color:var(--text2)" id="emptyCart">
+              <div style="font-size:4rem;margin-bottom:1rem">🛒</div>
+              <p>Сагс хоосон байна</p>
+              <button class="btn btn-primary" onclick="navigate('shop')" style="margin-top:1rem">Дэлгүүрлэх</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="order-summary">
+            <h3>Захиалгын Дүн</h3>
+            <div class="summary-row"><span style="color:var(--text2)">Барааны үнэ</span><span id="subTotal">₮ 0</span></div>
+            <div class="summary-row"><span style="color:var(--text2)">Хүргэлт</span><span style="color:var(--neon3)">ҮНЭГҮЙ</span></div>
+            <div class="summary-row"><span style="color:var(--text2)">НӨАТ (10%)</span><span id="vatAmount">₮ 0</span></div>
+            <div class="summary-row total"><span>Нийт дүн</span><span id="totalAmount">₮ 0</span></div>
+            <div class="coupon-row">
+              <input type="text" class="coupon-input" placeholder="Купон код">
+              <button class="btn btn-outline btn-sm" onclick="showNotif('Купон хэрэглэгдлээ!','🎁')">Хэрэглэх</button>
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:.5rem;justify-content:center" onclick="navigate('checkout')">Захиалга өгөх →</button>
+            <button class="btn btn-outline" style="width:100%;margin-top:.5rem;justify-content:center" onclick="navigate('shop')">Дэлгүүрлэх үргэлжлүүлэх</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT PAGE -->
+<div class="page" id="page-checkout">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <h1>💳 Захиалга Хийх</h1>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <div class="checkout-steps">
+        <div class="step done">✓ Сагс</div>
+        <div class="step active">📦 Хүргэлт</div>
+        <div class="step">💳 Төлбөр</div>
+        <div class="step">✅ Баталгаажуулалт</div>
+      </div>
+      <div class="checkout-layout">
+        <div>
+          <div class="form-section">
+            <h3>📍 Хүргэлтийн Хаяг</h3>
+            <div class="form-grid">
+              <div class="form-group"><label class="form-label">Овог</label><input type="text" class="form-input" placeholder="Баатар"></div>
+              <div class="form-group"><label class="form-label">Нэр</label><input type="text" class="form-input" placeholder="Монгол"></div>
+              <div class="form-group form-full"><label class="form-label">Утасны дугаар</label><input type="tel" class="form-input" placeholder="9911 1234"></div>
+              <div class="form-group form-full"><label class="form-label">Хот/Аймаг</label>
+                <select class="form-input"><option>Улаанбаатар</option><option>Дархан-Уул</option><option>Орхон</option><option>Завхан</option></select>
+              </div>
+              <div class="form-group form-full"><label class="form-label">Хаяг</label><input type="text" class="form-input" placeholder="Дүүрэг, Хороо, Гудамж..."></div>
+              <div class="form-group form-full"><label class="form-label">Орц, тоот</label><input type="text" class="form-input" placeholder="Орц 1, Тоот 42"></div>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3>💳 Төлбөрийн Хэлбэр</h3>
+            <div class="payment-methods">
+              <div class="payment-method selected" onclick="selectPayment(this,'qpay')"><div class="pm-icon">📱</div><div class="pm-name">QPay</div><div class="pm-bank">QR төлбөр</div></div>
+              <div class="payment-method" onclick="selectPayment(this,'socialpay')"><div class="pm-icon">🌐</div><div class="pm-name">SocialPay</div><div class="pm-bank">Хаан Банк</div></div>
+              <div class="payment-method" onclick="selectPayment(this,'khan')"><div class="pm-icon">🏦</div><div class="pm-name">Khan Bank</div><div class="pm-bank">Интернет банк</div></div>
+              <div class="payment-method" onclick="selectPayment(this,'golomt')"><div class="pm-icon">💎</div><div class="pm-name">Golomt</div><div class="pm-bank">Голомт Банк</div></div>
+              <div class="payment-method" onclick="selectPayment(this,'tdb')"><div class="pm-icon">🏛️</div><div class="pm-name">TDB</div><div class="pm-bank">Худалдаа Хөгжлийн</div></div>
+              <div class="payment-method" onclick="selectPayment(this,'monpay')"><div class="pm-icon">🇲🇳</div><div class="pm-name">MonPay</div><div class="pm-bank">Монгол Pay</div></div>
+            </div>
+            <div class="qr-section" id="qrSection">
+              <h4 style="font-family:var(--font-cyber);font-size:.9rem;color:var(--neon);margin-bottom:.5rem">QPay QR Код</h4>
+              <p style="color:var(--text2);font-size:.82rem">Доорх QR кодыг уншуулж төлбөрөө хийнэ үү</p>
+              <div class="qr-box">📱</div>
+              <div class="qr-amount" id="qrAmount">₮ 0</div>
+              <p style="color:var(--text2);font-size:.78rem">QPay апп эсвэл банкны апп ашиглаарай</p>
+              <div style="display:flex;align-items:center;gap:.5rem;justify-content:center;margin-top:1rem">
+                <div style="width:10px;height:10px;border-radius:50%;background:var(--neon3);animation:pulse 1.5s infinite"></div>
+                <span style="font-size:.82rem;color:var(--neon3)">Төлбөр хүлээж байна...</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px" onclick="confirmOrder()">✅ Захиалга Баталгаажуулах</button>
+        </div>
+        <div>
+          <div class="order-summary">
+            <h3>Захиалгын Мэдээлэл</h3>
+            <div id="checkoutItems"></div>
+            <div class="summary-row" style="margin-top:1rem"><span style="color:var(--text2)">Дэд дүн</span><span id="coSubTotal">₮ 0</span></div>
+            <div class="summary-row"><span style="color:var(--text2)">Хүргэлт</span><span style="color:var(--neon3)">ҮНЭГҮЙ</span></div>
+            <div class="summary-row total"><span>Нийт</span><span id="coTotal">₮ 0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN PAGE -->
+<div class="page" id="page-login">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">MAN-TECH</div>
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchAuthTab('login',this)">Нэвтрэх</div>
+        <div class="auth-tab" onclick="switchAuthTab('register',this)">Бүртгүүлэх</div>
+      </div>
+      <div id="loginForm">
+        <div class="form-group" style="margin-bottom:1rem"><label class="form-label">И-мэйл</label><input type="email" class="form-input" placeholder="mail@example.com"></div>
+        <div class="form-group" style="margin-bottom:1.5rem"><label class="form-label">Нууц үг</label><input type="password" class="form-input" placeholder="••••••••"></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="loginUser()">Нэвтрэх</button>
+        <div class="divider" style="margin:1rem 0">эсвэл</div>
+        <div class="social-login">
+          <button class="social-btn" onclick="showNotif('Google-ээр нэвтэрч байна...','🔄')">📧 Google</button>
+          <button class="social-btn" onclick="showNotif('Facebook-аар нэвтэрч байна...','🔄')">📘 Facebook</button>
+        </div>
+      </div>
+      <div id="registerForm" style="display:none">
+        <div class="form-grid" style="margin-bottom:1rem">
+          <div class="form-group"><label class="form-label">Овог</label><input type="text" class="form-input" placeholder="Баатар"></div>
+          <div class="form-group"><label class="form-label">Нэр</label><input type="text" class="form-input" placeholder="Монгол"></div>
+        </div>
+        <div class="form-group" style="margin-bottom:1rem"><label class="form-label">И-мэйл</label><input type="email" class="form-input" placeholder="mail@example.com"></div>
+        <div class="form-group" style="margin-bottom:1rem"><label class="form-label">Утасны дугаар</label><input type="tel" class="form-input" placeholder="9911 0000"></div>
+        <div class="form-group" style="margin-bottom:1.5rem"><label class="form-label">Нууц үг</label><input type="password" class="form-input" placeholder="••••••••"></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="loginUser()">Бүртгүүлэх</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PAGE -->
+<div class="page" id="page-profile">
+  <div class="section">
+    <div class="section-inner">
+      <div class="profile-layout">
+        <div class="profile-sidebar">
+          <div class="profile-avatar">👤</div>
+          <div class="profile-name">Монгол Баатар</div>
+          <div class="profile-email">mongol@example.com</div>
+          <ul class="profile-menu">
+            <li class="active" onclick="switchProfileTab('orders',this)">📦 Миний захиалгууд</li>
+            <li onclick="switchProfileTab('wishlist',this)">❤️ Хүсэлтийн жагсаалт</li>
+            <li onclick="switchProfileTab('settings',this)">⚙️ Тохиргоо</li>
+            <li onclick="switchProfileTab('address',this)">📍 Хаягууд</li>
+            <li onclick="navigate('home')" style="color:var(--red);border-bottom:none;margin-top:1rem">🚪 Гарах</li>
+          </ul>
+        </div>
+        <div>
+          <div id="profile-orders">
+            <h2 style="font-family:var(--font-cyber);font-size:1.2rem;margin-bottom:1.5rem;color:var(--neon)">Миний Захиалгууд</h2>
+            <div id="ordersList"></div>
+          </div>
+          <div id="profile-wishlist" style="display:none">
+            <h2 style="font-family:var(--font-cyber);font-size:1.2rem;margin-bottom:1.5rem;color:var(--neon)">❤️ Хүсэлтийн Жагсаалт</h2>
+            <div class="products-grid" id="wishlistProducts"></div>
+          </div>
+          <div id="profile-settings" style="display:none">
+            <h2 style="font-family:var(--font-cyber);font-size:1.2rem;margin-bottom:1.5rem;color:var(--neon)">⚙️ Тохиргоо</h2>
+            <div class="form-section">
+              <h3>Хувийн Мэдээлэл</h3>
+              <div class="form-grid">
+                <div class="form-group"><label class="form-label">Овог</label><input class="form-input" value="Монгол"></div>
+                <div class="form-group"><label class="form-label">Нэр</label><input class="form-input" value="Баатар"></div>
+                <div class="form-group form-full"><label class="form-label">И-мэйл</label><input class="form-input" value="mongol@example.com"></div>
+                <div class="form-group form-full"><label class="form-label">Утас</label><input class="form-input" value="9911 0000"></div>
+              </div>
+              <button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showNotif('Мэдээлэл хадгалагдлаа!','✅')">Хадгалах</button>
+            </div>
+          </div>
+          <div id="profile-address" style="display:none">
+            <h2 style="font-family:var(--font-cyber);font-size:1.2rem;margin-bottom:1.5rem;color:var(--neon)">📍 Хүргэлтийн Хаягууд</h2>
+            <div class="form-section">
+              <div class="cart-item" style="flex-direction:column;align-items:start">
+                <div style="display:flex;justify-content:space-between;width:100%">
+                  <span class="tag">Үндсэн хаяг</span>
+                  <button class="btn btn-outline btn-xs">Засах</button>
+                </div>
+                <p style="margin-top:.7rem;font-weight:600">Монгол Баатар</p>
+                <p style="color:var(--text2);font-size:.88rem">Улаанбаатар, СБД, 13-р хороо, Мониос гудамж 12</p>
+                <p style="color:var(--text2);font-size:.88rem">📞 9911 0000</p>
+              </div>
+              <button class="btn btn-outline btn-sm" style="margin-top:1rem" onclick="showNotif('Шинэ хаяг нэмэгдлээ!','📍')">+ Шинэ хаяг нэмэх</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page" id="page-contact">
+  <div class="page-header">
+    <div class="page-header-inner">
+      <h1>📡 Холбоо Барих</h1>
+      <p>Бидэнтэй холбогдоорой</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-inner">
+      <div class="contact-layout">
+        <div class="contact-info-cards">
+          <div class="contact-card"><div class="contact-icon">📍</div><div><h4>Хаяг</h4><p>Улаанбаатар хот, СБД, Чингис Хааны өргөн чөлөө 15, MAN-TECH Tower</p></div></div>
+          <div class="contact-card"><div class="contact-icon">📞</div><div><h4>Утас</h4><p>+976 7711-8899<br>+976 9911-8800</p></div></div>
+          <div class="contact-card"><div class="contact-icon">📧</div><div><h4>И-мэйл</h4><p>info@mantech.mn<br>support@mantech.mn</p></div></div>
+          <div class="contact-card"><div class="contact-icon">🕐</div><div><h4>Ажлын цаг</h4><p>Даваа-Бямба: 10:00-20:00<br>Ням: 11:00-18:00</p></div></div>
+          <div class="contact-card" style="background:rgba(0,212,255,0.05);border-color:var(--neon)"><div class="contact-icon">💬</div><div><h4>Live Chat</h4><p>Онлайн тусламж 24/7 ажилладаг</p></div></div>
+        </div>
+        <div class="form-section">
+          <h3>Мэссэж Илгээх</h3>
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Нэр</label><input class="form-input" placeholder="Таны нэр"></div>
+            <div class="form-group"><label class="form-label">Утас</label><input class="form-input" placeholder="9911 0000"></div>
+            <div class="form-group form-full"><label class="form-label">И-мэйл</label><input type="email" class="form-input" placeholder="mail@example.com"></div>
+            <div class="form-group form-full"><label class="form-label">Сэдэв</label>
+              <select class="form-input"><option>Захиалгын мэдээлэл</option><option>Баталгааны асуудал</option><option>Төлбөрийн асуудал</option><option>Хүргэлт</option><option>Бусад</option></select>
+            </div>
+            <div class="form-group form-full"><label class="form-label">Мэссэж</label><textarea class="form-input" rows="5" placeholder="Таны мэссэж..."></textarea></div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:1rem" onclick="showNotif('Мэссэж амжилттай илгээгдлээ!','📧')">Илгээх →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div class="page" id="page-admin">
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <div style="padding:1rem 1.5rem;font-family:var(--font-cyber);color:var(--neon);font-size:1rem;border-bottom:1px solid var(--border);margin-bottom:.5rem">⚡ ADMIN PANEL</div>
+      <ul class="admin-menu">
+        <li class="admin-menu-item active" onclick="switchAdmin('dashboard',this)"><span class="admin-menu-icon">📊</span>Хяналтын самбар</li>
+        <li class="admin-menu-item" onclick="switchAdmin('products',this)"><span class="admin-menu-icon">📦</span>Бүтээгдэхүүн</li>
+        <li class="admin-menu-item" onclick="switchAdmin('orders',this)"><span class="admin-menu-icon">🛍️</span>Захиалгууд</li>
+        <li class="admin-menu-item" onclick="switchAdmin('users',this)"><span class="admin-menu-icon">👥</span>Хэрэглэгчид</li>
+        <li class="admin-menu-item" onclick="switchAdmin('categories',this)"><span class="admin-menu-icon">🗂️</span>Категориуд</li>
+        <li class="admin-menu-item" onclick="navigate('home')"><span class="admin-menu-icon">🏠</span>Сайт руу буцах</li>
+      </ul>
+    </div>
+    <div class="admin-content">
+      <div class="admin-section active" id="admin-dashboard">
+        <h2 style="font-family:var(--font-cyber);font-size:1.3rem;margin-bottom:1.5rem;color:var(--neon)">📊 Хяналтын Самбар</h2>
+        <div class="stat-cards">
+          <div class="stat-card"><div class="stat-card-num">₮ 128.5M</div><div class="stat-card-label">Энэ сарын орлого</div><div class="stat-card-change">↑ 23% өссөн</div></div>
+          <div class="stat-card"><div class="stat-card-num">1,847</div><div class="stat-card-label">Нийт захиалга</div><div class="stat-card-change">↑ 18% өссөн</div></div>
+          <div class="stat-card"><div class="stat-card-num" id="adminProductCount">0</div><div class="stat-card-label">Бүтээгдэхүүн</div><div class="stat-card-change">Нийт</div></div>
+          <div class="stat-card"><div class="stat-card-num">20,419</div><div class="stat-card-label">Хэрэглэгчид</div><div class="stat-card-change">↑ 31% өссөн</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="stat-card"><div style="font-family:var(--font-cyber);font-size:.85rem;color:var(--neon);margin-bottom:1rem">Сүүлийн захиалгууд</div><div id="recentOrders"></div></div>
+          <div class="stat-card"><div style="font-family:var(--font-cyber);font-size:.85rem;color:var(--neon);margin-bottom:1rem">Хамгийн их зарагдсан</div><div id="topProducts"></div></div>
+        </div>
+      </div>
+      <div class="admin-section" id="admin-products">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+          <h2 style="font-family:var(--font-cyber);font-size:1.3rem;color:var(--neon)">📦 Бүтээгдэхүүн Удирдлага</h2>
+          <button class="btn btn-primary btn-sm" onclick="openProductModal()">+ Бараа нэмэх</button>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+          <table class="admin-table">
+            <thead><tr><th>ID</th><th>Зураг</th><th>Нэр</th><th>Категори</th><th>Үнэ</th><th>Нөөц</th><th>Статус</th><th>Үйлдэл</th></tr></thead>
+            <tbody id="adminProductsTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="admin-section" id="admin-orders">
+        <h2 style="font-family:var(--font-cyber);font-size:1.3rem;margin-bottom:1.5rem;color:var(--neon)">🛍️ Захиалгын Удирдлага</h2>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+          <table class="admin-table">
+            <thead><tr><th>Захиалга #</th><th>Хэрэглэгч</th><th>Бараа</th><th>Дүн</th><th>Төлбөр</th><th>Статус</th><th>Үйлдэл</th></tr></thead>
+            <tbody id="adminOrdersTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="admin-section" id="admin-users">
+        <h2 style="font-family:var(--font-cyber);font-size:1.3rem;margin-bottom:1.5rem;color:var(--neon)">👥 Хэрэглэгчдийн Удирдлага</h2>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+          <table class="admin-table">
+            <thead><tr><th>ID</th><th>Нэр</th><th>И-мэйл</th><th>Утас</th><th>Захиалга</th><th>Нийт зарцуулсан</th><th>Статус</th></tr></thead>
+            <tbody id="adminUsersTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="admin-section" id="admin-categories">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+          <h2 style="font-family:var(--font-cyber);font-size:1.3rem;color:var(--neon)">🗂️ Категори Удирдлага</h2>
+          <button class="btn btn-primary btn-sm" onclick="showNotif('Категори нэмэх...','➕')">+ Нэмэх</button>
+        </div>
+        <div id="adminCatCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay hidden" id="productModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Бараа Нэмэх</h3>
+      <button class="modal-close" onclick="closeProductModal()">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group form-full"><label class="form-label">Бүтээгдэхүүний нэр</label><input class="form-input" id="pName" placeholder="жнь: ASUS ROG Swift Monitor"></div>
+      <div class="form-group"><label class="form-label">Категори</label>
+        <select class="form-input" id="pCat"><option>Гейминг аксессуар</option><option>PC хэсгүүд</option><option>Гарын самбар</option><option>Хулгана</option><option>Чихэвч</option><option>Монитор</option><option>Дижитал бараа</option><option>Тех гаджет</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Үнэ (₮)</label><input type="number" class="form-input" id="pPrice" placeholder="1500000"></div>
+      <div class="form-group"><label class="form-label">Хямдрал %</label><input type="number" class="form-input" id="pDiscount" placeholder="0"></div>
+      <div class="form-group"><label class="form-label">Нөөцийн тоо</label><input type="number" class="form-input" id="pStock" placeholder="50"></div>
+      <div class="form-group"><label class="form-label">Дүрс (emoji)</label><input class="form-input" id="pIcon" placeholder="🖥️"></div>
+      <div class="form-group form-full"><label class="form-label">Тайлбар</label><textarea class="form-input" id="pDesc" rows="3" placeholder="Бүтээгдэхүүний дэлгэрэнгүй тайлбар..."></textarea></div>
+      <div class="form-group form-full"><label class="form-label">Зургийн URL (Cloudinary)</label><input class="form-input" id="pImage" placeholder="https://res.cloudinary.com/..."></div>
+    </div>
+    <div style="display:flex;gap:1rem;margin-top:1.5rem;justify-content:flex-end">
+      <button class="btn btn-outline" onclick="closeProductModal()">Цуцлах</button>
+      <button class="btn btn-primary" onclick="saveProduct()">Хадгалах</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER CONFIRM MODAL -->
+<div class="modal-overlay hidden" id="confirmModal">
+  <div class="modal" style="text-align:center">
+    <div style="font-size:4rem;margin-bottom:1rem">✅</div>
+    <h3 style="font-family:var(--font-cyber);color:var(--neon3);font-size:1.3rem;margin-bottom:.5rem">Захиалга Амжилттай!</h3>
+    <p style="color:var(--text2);margin-bottom:1rem">Таны захиалга #MNT-2024-<span id="orderNum">0000</span> амжилттай бүртгэгдлээ.</p>
+    <p style="color:var(--text2);font-size:.88rem;margin-bottom:1.5rem">24 цагийн дотор хүргэлтийн мэдэгдэл явуулна.</p>
+    <button class="btn btn-primary" onclick="closeConfirm();navigate('home')">Нүүр хуудас руу буцах</button>
+  </div>
+</div>
+
+<script>
+const fmt=n=>'₮ '+Number(n).toLocaleString('mn-MN');
+const CATEGORIES=[
+  {id:'gaming',name:'Гейминг аксессуар',icon:'🎮',count:124},
+  {id:'pc',name:'PC хэсгүүд',icon:'🖥️',count:89},
+  {id:'keyboard',name:'Гарын самбар',icon:'⌨️',count:56},
+  {id:'mouse',name:'Хулгана',icon:'🖱️',count:43},
+  {id:'headset',name:'Чихэвч',icon:'🎧',count:38},
+  {id:'monitor',name:'Монитор',icon:'🖥️',count:31},
+  {id:'digital',name:'Дижитал бараа',icon:'💾',count:67},
+  {id:'gadget',name:'Тех гаджет',icon:'📱',count:92},
+];
+let products=[
+  {id:1,name:'ASUS ROG Swift Pro Gaming Monitor 240Hz 4K',cat:'Монитор',catId:'monitor',icon:'🖥️',price:3500000,oldPrice:4200000,rating:4.8,reviews:124,stock:15,isNew:true,discount:17,desc:'Хамгийн дэвшилтэт гейминг монитор. 240Hz давтамж, 4K нягтрал, 1ms хариу үйлдэл.',specs:{Дэлгэц:'27 инч IPS',Нягтрал:'3840x2160 (4K)',Давтамж:'240Hz',Хариу:'1ms GTG',Холболт:'HDMI 2.1 x2, DP 1.4'}},
+  {id:2,name:'Razer BlackWidow V4 Механик Гарын Самбар',cat:'Гарын самбар',catId:'keyboard',icon:'⌨️',price:450000,oldPrice:550000,rating:4.7,reviews:89,stock:32,isNew:false,discount:18,desc:'Razer Green Switch механик товчлуур. Razer Chroma RGB гэрэлтүүлэг.',specs:{Switch:'Razer Green Clicky',Гэрэлтүүлэг:'Razer Chroma RGB',Холболт:'USB-C Detachable',Жин:'1.28 кг'}},
+  {id:3,name:'Logitech G Pro X Superlight 2 Гейминг Хулгана',cat:'Хулгана',catId:'mouse',icon:'🖱️',price:280000,oldPrice:320000,rating:4.9,reviews:203,stock:48,isNew:true,discount:13,desc:'HERO 2 мэдрэгч. 32000 DPI. 95 цагийн зай. Ultralight дизайн.',specs:{Мэдрэгч:'HERO 2 25.6K',DPI:'100-32000',Зай:'95 цаг',Жин:'60 гр',Холболт:'Lightspeed Wireless'}},
+  {id:4,name:'SteelSeries Arctis Nova Pro Wireless Чихэвч',cat:'Чихэвч',catId:'headset',icon:'🎧',price:520000,oldPrice:620000,rating:4.8,reviews:156,stock:22,isNew:false,discount:16,desc:'Hi-Fi чанартай дуу. ANC технологи. PC болон консолд нийцтэй.',specs:{Давтамж:'10-40,000 Hz',Холболт:'2.4GHz + Bluetooth',Зай:'22+ цаг',Микрофон:'ClearCast Gen 2'}},
+  {id:5,name:'Corsair iCUE H150i ELITE LCD Cooler',cat:'PC хэсгүүд',catId:'pc',icon:'❄️',price:380000,oldPrice:450000,rating:4.6,reviews:67,stock:19,isNew:false,discount:16,desc:'360mm AIO хөргөлт. LCD дэлгэцтэй ус хөргөлтийн систем.',specs:{Хэмжээ:'360mm',Фан:'3x120mm LL120 RGB',LCD:'2.1" IPS',Насос:'Pwm Control'}},
+  {id:6,name:'NVIDIA GeForce RTX 4090 24GB Видео карт',cat:'PC хэсгүүд',catId:'pc',icon:'🎮',price:5200000,oldPrice:6000000,rating:4.9,reviews:44,stock:7,isNew:true,discount:13,desc:'Хамгийн хүчирхэг гэрийн хэрэглэгчдэд зориулсан GPU. 4K 240fps гейминг.',specs:{Санах:'24GB GDDR6X',Цөм:'16384 CUDA',Цах:'450W TDP',Холболт:'PCIe 4.0 x16'}},
+  {id:7,name:'Samsung Odyssey G9 49" Curved Monitor',cat:'Монитор',catId:'monitor',icon:'🖥️',price:2800000,oldPrice:3200000,rating:4.7,reviews:38,stock:11,isNew:false,discount:13,desc:'49 инч хагас давхрага хэлбэрийн панел. 240Hz. 1000R муруй.',specs:{Дэлгэц:'49" DQHD VA',Нягтрал:'5120x1440',Давтамж:'240Hz',Муруй:'1000R'}},
+  {id:8,name:'AMD Ryzen 9 7950X Процессор',cat:'PC хэсгүүд',catId:'pc',icon:'💻',price:1150000,oldPrice:1400000,rating:4.8,reviews:91,stock:28,isNew:false,discount:18,desc:'16 цөм, 32 утас. 5.7GHz Max Boost.',specs:{Цөм:'16 / 32',Давтамж:'4.5 - 5.7GHz',Cache:'80MB Total',TDP:'170W',Socket:'AM5'}},
+  {id:9,name:'HyperX Cloud Alpha Wireless Чихэвч',cat:'Чихэвч',catId:'headset',icon:'🎧',price:210000,oldPrice:260000,rating:4.5,reviews:178,stock:55,isNew:false,discount:19,desc:'300 цагийн зай! Хамгийн урт зайтай гейминг чихэвч.',specs:{Зай:'300 цаг',Давтамж:'15-21,000Hz',Холболт:'2.4GHz',Систем:'PS5/PC'}},
+  {id:10,name:'Keychron Q1 Max Механик Гарын Самбар',cat:'Гарын самбар',catId:'keyboard',icon:'⌨️',price:320000,oldPrice:380000,rating:4.7,reviews:62,stock:24,isNew:true,discount:16,desc:'Дюраль хайлшийн чанарын гэрийн самбар. Knob удирдлагатай.',specs:{Material:'Aluminum CNC',Switch:'Gateron Jupiter',Bluetooth:'Bluetooth 5.1',Холболт:'USB-C + BT'}},
+  {id:11,name:'Elgato Stream Deck XL',cat:'Гейминг аксессуар',catId:'gaming',icon:'🎛️',price:450000,oldPrice:520000,rating:4.6,reviews:44,stock:18,isNew:false,discount:13,desc:'32 LCD товчлуур. Дамжуулалт, видео засварлалт удирдлагад.',specs:{Товчлуур:'32 LCD Keys',Холболт:'USB-C',Нийцтэй:'Windows, Mac'}},
+  {id:12,name:'Sony WH-1000XM5 Noise Cancelling Чихэвч',cat:'Чихэвч',catId:'headset',icon:'🎧',price:590000,oldPrice:700000,rating:4.9,reviews:312,stock:33,isNew:false,discount:16,desc:'Дэлхийн хамгийн сайн ANC технологи. 30 цагийн зай.',specs:{ANC:'Industry Best',Зай:'30 цаг',Codec:'LDAC, AAC, SBC',Жин:'250 гр'}},
+];
+let cart=[],wishlist=[],editingProductId=null;
+function showNotif(msg,icon='✅'){
+  const n=document.getElementById('notification');
+  document.getElementById('notifMsg').textContent=msg;
+  document.getElementById('notifIcon').textContent=icon;
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),3000);
+}
+function navigate(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('page-'+page);
+  if(el){el.classList.add('active');window.scrollTo(0,0);}
+  if(page==='shop')renderShop();
+  if(page==='cart')renderCart();
+  if(page==='profile')renderProfile();
+  if(page==='admin')renderAdmin();
+  if(page==='checkout')renderCheckout();
+}
+function renderCategories(){
+  const g=document.getElementById('categoriesGrid');
+  if(!g)return;
+  g.innerHTML=CATEGORIES.map(c=>`<div class="cat-card" onclick="navigate('shop')"><div class="cat-icon">${c.icon}</div><div class="cat-name">${c.name}</div><div class="cat-count">${c.count} бараа</div></div>`).join('');
+}
+function productCard(p){
+  const inWish=wishlist.includes(p.id);
+  return `<div class="product-card">
+    <div class="product-img">
+      ${p.discount?`<div class="badge-discount">-${p.discount}%</div>`:''}
+      ${p.isNew?`<div class="badge-new" style="${p.discount?'top:40px':''}">ШИНЭ</div>`:''}
+      <div style="font-size:5rem">${p.icon}</div>
+      <button class="wishlist-btn ${inWish?'active':''}" style="position:absolute;top:10px;right:10px" onclick="toggleWish(event,${p.id})">${inWish?'❤️':'🤍'}</button>
+    </div>
+    <div class="product-info">
+      <div class="product-cat">${p.cat}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-rating">
+        <span class="stars">${'⭐'.repeat(Math.floor(p.rating))}</span>
+        <span class="rating-count">(${p.reviews})</span>
+        <span style="font-size:.78rem;color:var(--neon3);margin-left:auto">${p.stock>10?'✅ Нөөцтэй':p.stock>0?'⚠️ Дуусаж байна':'❌ Дууссан'}</span>
+      </div>
+      <div class="product-price">
+        <span class="price-current">${fmt(p.price)}</span>
+        ${p.oldPrice?`<span class="price-old">${fmt(p.oldPrice)}</span>`:''}
+      </div>
+      <div class="product-actions">
+        <button class="btn btn-primary btn-sm" style="flex:1" onclick="addToCart(${p.id})">🛒 Сагсанд</button>
+        <button class="btn btn-outline btn-sm" onclick="openProduct(${p.id})">Дэлгэрэнгүй</button>
+      </div>
+    </div>
+  </div>`;
+}
+function renderFeatured(){
+  const g=document.getElementById('featuredProducts');
+  if(g)g.innerHTML=products.slice(0,4).map(p=>productCard(p)).join('');
+  const t=document.getElementById('trendingProducts');
+  if(t)t.innerHTML=products.slice(4,8).map(p=>productCard(p)).join('');
+}
+function renderShop(){renderCatFilters();filterProducts();}
+function renderCatFilters(){
+  const g=document.getElementById('catFilters');
+  if(!g)return;
+  g.innerHTML=CATEGORIES.map(c=>`<div class="filter-item"><input type="checkbox" value="${c.id}" onchange="filterProducts()" class="catFilter"><span>${c.icon} ${c.name}</span></div>`).join('');
+}
+function filterProducts(){
+  const search=(document.getElementById('shopSearch')?.value||'').toLowerCase();
+  const priceMax=parseInt(document.getElementById('priceRange')?.value||5000000);
+  const sort=document.getElementById('sortSelect')?.value||'default';
+  const selectedCats=[...document.querySelectorAll('.catFilter:checked')].map(c=>c.value);
+  const ratingMin=parseFloat([...document.querySelectorAll('[name=rating]:checked')].map(r=>r.value)[0]||0);
+  let filtered=products.filter(p=>{
+    if(search&&!p.name.toLowerCase().includes(search)&&!p.cat.toLowerCase().includes(search))return false;
+    if(p.price>priceMax)return false;
+    if(selectedCats.length&&!selectedCats.includes(p.catId))return false;
+    if(p.rating<ratingMin)return false;
+    return true;
+  });
+  if(sort==='price-asc')filtered.sort((a,b)=>a.price-b.price);
+  if(sort==='price-desc')filtered.sort((a,b)=>b.price-a.price);
+  if(sort==='rating')filtered.sort((a,b)=>b.rating-a.rating);
+  if(sort==='new')filtered=filtered.filter(p=>p.isNew).concat(filtered.filter(p=>!p.isNew));
+  const g=document.getElementById('shopProducts');
+  if(g)g.innerHTML=filtered.length?filtered.map(p=>productCard(p)).join(''):'<div style="color:var(--text2);padding:4rem;text-align:center;grid-column:1/-1">Хайлтад тохирсон бараа олдсонгүй</div>';
+  const rc=document.getElementById('resultCount');
+  if(rc)rc.textContent=filtered.length+' бараа';
+}
+function updatePriceDisplay(){
+  const v=document.getElementById('priceRange')?.value;
+  const d=document.getElementById('priceMax');
+  if(d)d.textContent=fmt(v);
+}
+function resetFilters(){
+  document.querySelectorAll('.catFilter').forEach(c=>c.checked=false);
+  const pr=document.getElementById('priceRange');
+  if(pr)pr.value=5000000;
+  updatePriceDisplay();
+  const ss=document.getElementById('shopSearch');
+  if(ss)ss.value='';
+  filterProducts();
+}
+function toggleWish(e,id){
+  e.stopPropagation();
+  const idx=wishlist.indexOf(id);
+  if(idx>=0){wishlist.splice(idx,1);showNotif('Хүсэлтийн жагсаалтаас хасагдлаа','💔');}
+  else{wishlist.push(id);showNotif('Хүсэлтийн жагсаалтанд нэмэгдлээ','❤️');}
+  const btn=e.currentTarget;
+  btn.textContent=wishlist.includes(id)?'❤️':'🤍';
+  btn.classList.toggle('active',wishlist.includes(id));
+}
+function addToCart(id){
+  const p=products.find(pr=>pr.id===id);
+  if(!p)return;
+  const existing=cart.find(c=>c.id===id);
+  if(existing)existing.qty++;
+  else cart.push({...p,qty:1});
+  updateCartBadge();
+  showNotif(p.name.substring(0,30)+'... сагсанд нэмэгдлээ','🛒');
+}
+function updateCartBadge(){
+  const b=document.getElementById('cartBadge');
+  if(b)b.textContent=cart.reduce((s,c)=>s+c.qty,0);
+}
+function renderCart(){
+  const container=document.getElementById('cartItems');
+  const empty=document.getElementById('emptyCart');
+  if(!cart.length){container.innerHTML='';if(empty)empty.style.display='block';updateCartTotals();return;}
+  if(empty)empty.style.display='none';
+  container.innerHTML=cart.map(item=>`
+    <div class="cart-item">
+      <div class="cart-item-img">${item.icon}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-cat">${item.cat}</div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">${fmt(item.price)}</div>
+      </div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+        <span class="qty-num">${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+      </div>
+      <div style="text-align:right;min-width:120px">
+        <div style="font-family:var(--font-cyber);color:var(--neon)">${fmt(item.price*item.qty)}</div>
+        <button class="btn btn-red btn-xs" style="margin-top:.5rem" onclick="removeFromCart(${item.id})">Устгах</button>
+      </div>
+    </div>`).join('');
+  updateCartTotals();
+}
+function changeQty(id,delta){
+  const item=cart.find(c=>c.id===id);
+  if(!item)return;
+  item.qty=Math.max(1,item.qty+delta);
+  renderCart();updateCartBadge();
+}
+function removeFromCart(id){
+  cart=cart.filter(c=>c.id!==id);
+  renderCart();updateCartBadge();
+  showNotif('Сагснаас хасагдлаа','🗑️');
+}
+function updateCartTotals(){
+  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const vat=sub*0.1;
+  const total=sub+vat;
+  const setSafe=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  setSafe('subTotal',fmt(sub));setSafe('vatAmount',fmt(vat));setSafe('totalAmount',fmt(total));
+}
+function renderCheckout(){
+  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const total=sub*1.1;
+  const ci=document.getElementById('checkoutItems');
+  if(ci)ci.innerHTML=cart.map(c=>`<div class="summary-row" style="font-size:.85rem"><span style="color:var(--text2)">${c.name.substring(0,25)}... x${c.qty}</span><span>${fmt(c.price*c.qty)}</span></div>`).join('')||'<p style="color:var(--text2);font-size:.85rem">Сагс хоосон</p>';
+  const setSafe=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  setSafe('coSubTotal',fmt(sub));setSafe('coTotal',fmt(total));setSafe('qrAmount',fmt(total));
+}
+function selectPayment(el,method){
+  document.querySelectorAll('.payment-method').forEach(m=>m.classList.remove('selected'));
+  el.classList.add('selected');
+  const qr=document.getElementById('qrSection');
+  if(qr)qr.style.display=['qpay','socialpay'].includes(method)?'block':'none';
+}
+function confirmOrder(){
+  if(!cart.length){showNotif('Сагс хоосон байна!','⚠️');return;}
+  const num=Math.floor(Math.random()*9000+1000);
+  document.getElementById('orderNum').textContent=num;
+  document.getElementById('confirmModal').classList.remove('hidden');
+  cart=[];updateCartBadge();
+}
+function closeConfirm(){document.getElementById('confirmModal').classList.add('hidden');}
+function openProduct(id){
+  const p=products.find(pr=>pr.id===id);
+  if(!p)return;
+  const content=document.getElementById('productDetailContent');
+  if(content)content.innerHTML=`
+    <div class="product-gallery"><div style="font-size:10rem;position:relative;z-index:1">${p.icon}</div></div>
+    <div class="product-detail-info">
+      <div class="breadcrumb"><a onclick="navigate('home')">Нүүр</a><span>›</span><a onclick="navigate('shop')">${p.cat}</a><span>›</span><span style="color:var(--text)">${p.name.substring(0,30)}...</span></div>
+      <div class="product-detail-name">${p.name}</div>
+      <div class="product-rating" style="font-size:1rem;gap:8px"><span class="stars" style="font-size:1.1rem">${'⭐'.repeat(Math.floor(p.rating))}</span><span style="color:var(--neon);font-weight:600">${p.rating}</span><span style="color:var(--text2)">(${p.reviews} үнэлгээ)</span></div>
+      <div class="stock-indicator" style="margin:1rem 0"><div class="stock-dot"></div><span style="color:var(--neon3)">Нөөцтэй (${p.stock} ширхэг)</span></div>
+      <div class="product-detail-price">${fmt(p.price)}</div>
+      ${p.oldPrice?`<div class="product-detail-price-old">${fmt(p.oldPrice)} <span class="badge-discount" style="position:static;display:inline-block">-${p.discount}%</span></div>`:''}
+      <div class="qty-section">
+        <div class="qty-control"><button class="qty-btn" onclick="detailQty(-1)">−</button><span class="qty-num" id="detailQty">1</span><button class="qty-btn" onclick="detailQty(1)">+</button></div>
+        <button class="btn btn-primary" onclick="addToCart(${p.id});showNotif('Сагсанд нэмэгдлээ!','🛒')">🛒 Сагсанд нэмэх</button>
+        <button class="btn btn-outline" onclick="toggleWish2(${p.id})">🤍 Хадгалах</button>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem">
+        <div class="tag">🚚 Үнэгүй хүргэлт</div>
+        <div class="tag">🛡️ 2 жилийн баталгаа</div>
+        <div class="tag">↩️ 14 хоногт буцаах</div>
+      </div>
+    </div>`;
+  const descEl=document.getElementById('productDesc');
+  if(descEl)descEl.textContent=p.desc;
+  const specEl=document.getElementById('productSpec');
+  if(specEl&&p.specs)specEl.innerHTML=Object.entries(p.specs).map(([k,v])`<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.8rem"><div style="font-size:.75rem;color:var(--text2);letter-spacing:1px;margin-bottom:.2rem">${k}</div><div style="font-weight:600;font-size:.9rem">${v}</div></div>`).join('');
+  const revEl=document.getElementById('productReviews');
+  const reviews=[
+    {author:'Батбаяр М.',date:'2024.11.15',rating:5,text:'Гайхалтай бүтээгдэхүүн! Гейминг хийх нь огт өөр болсон.'},
+    {author:'Оюунтуяа Б.',date:'2024.11.08',rating:4,text:'Чанар сайн, үнэ нь боломжийн. Хүргэлт хурдан ирсэн.'},
+    {author:'Цэрэнчимэд Д.',date:'2024.10.29',rating:5,text:'Хоёр дахь удаагаа энэ дэлгүүрээс авлаа. Маш сайн!'},
+  ];
+  if(revEl)revEl.innerHTML=reviews.map(r=>`<div class="review-card"><div class="review-header"><div><div class="review-author">${r.author}</div><div class="stars">${'⭐'.repeat(r.rating)}</div></div><div class="review-date">${r.date}</div></div><p style="color:var(--text2);font-size:.88rem;margin-top:.5rem">${r.text}</p></div>`).join('');
+  switchTab('desc');navigate('product');
+}
+function detailQty(d){const el=document.getElementById('detailQty');if(el)el.textContent=Math.max(1,parseInt(el.textContent)+d);}
+function toggleWish2(id){
+  const idx=wishlist.indexOf(id);
+  if(idx>=0){wishlist.splice(idx,1);showNotif('Хүсэлтийн жагсаалтаас хасагдлаа','💔');}
+  else{wishlist.push(id);showNotif('Хүсэлтийн жагсаалтанд нэмэгдлээ','❤️');}
+}
+function switchTab(tab){
+  document.querySelectorAll('.tab').forEach((t,i)=>{const tabs=['desc','spec','reviews'];t.classList.toggle('active',tabs[i]===tab);});
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  const el=document.getElementById('tab-'+tab);if(el)el.classList.add('active');
+}
+function switchAuthTab(tab,el){
+  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+  if(el)el.classList.add('active');
+  else{const tabs=document.querySelectorAll('.auth-tab');if(tab==='register')tabs[1].classList.add('active');else tabs[0].classList.add('active');}
+  document.getElementById('loginForm').style.display=tab==='login'?'block':'none';
+  document.getElementById('registerForm').style.display=tab==='register'?'block':'none';
+}
+function loginUser(){showNotif('Амжилттай нэвтэрлээ!','✅');setTimeout(()=>navigate('home'),1000);}
+function switchProfileTab(tab,el){
+  document.querySelectorAll('.profile-menu li').forEach(li=>li.classList.remove('active'));
+  if(el)el.classList.add('active');
+  ['orders','wishlist','settings','address'].forEach(t=>{const el2=document.getElementById('profile-'+t);if(el2)el2.style.display=t===tab?'block':'none';});
+  if(tab==='wishlist')renderWishlist();
+}
+function renderWishlist(){
+  const g=document.getElementById('wishlistProducts');
+  if(!g)return;
+  const wished=products.filter(p=>wishlist.includes(p.id));
+  g.innerHTML=wished.length?wished.map(p=>productCard(p)).join(''):'<div style="color:var(--text2);padding:2rem">Хүсэлтийн жагсаалт хоосон байна</div>';
+}
+function renderProfile(){
+  const ol=document.getElementById('ordersList');
+  if(ol){
+    const orders=[
+      {id:'MNT-2024-3847',date:'2024.11.16',items:'ASUS ROG Monitor, Razer Keyboard',total:3950000,status:'Хүргэлтэнд'},
+      {id:'MNT-2024-3102',date:'2024.11.01',items:'Logitech G Pro X',total:280000,status:'Хүргэгдсэн'},
+      {id:'MNT-2024-2891',date:'2024.10.18',items:'SteelSeries Arctis Nova',total:520000,status:'Хүргэгдсэн'},
+    ];
+    ol.innerHTML=orders.map(o=>`<div class="cart-item" style="flex-direction:column;align-items:start;gap:.5rem"><div style="display:flex;justify-content:space-between;width:100%;align-items:center"><span style="font-family:var(--font-mono);color:var(--neon);font-size:.9rem">${o.id}</span><span class="status-badge ${o.status==='Хүргэгдсэн'?'status-active':'status-pending'}">${o.status}</span></div><div style="color:var(--text2);font-size:.85rem">${o.date}</div><div style="font-size:.9rem">${o.items}</div><div style="font-family:var(--font-cyber);color:var(--neon)">${fmt(o.total)}</div></div>`).join('');
+  }
+}
+function switchAdmin(section,el){
+  document.querySelectorAll('.admin-menu-item').forEach(i=>i.classList.remove('active'));
+  if(el)el.classList.add('active');
+  document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));
+  const sec=document.getElementById('admin-'+section);if(sec)sec.classList.add('active');
+}
+function renderAdmin(){
+  const apc=document.getElementById('adminProductCount');if(apc)apc.textContent=products.length;
+  renderAdminProducts();renderAdminOrders();renderAdminUsers();renderAdminCats();renderDashboardLists();
+}
+function renderAdminProducts(){
+  const tb=document.getElementById('adminProductsTable');if(!tb)return;
+  tb.innerHTML=products.map(p=>`<tr><td style="font-family:var(--font-mono);color:var(--text2);font-size:.8rem">#${p.id}</td><td style="font-size:2rem">${p.icon}</td><td style="font-weight:600;max-width:200px">${p.name.substring(0,40)}${p.name.length>40?'...':''}</td><td><span class="tag">${p.cat}</span></td><td style="font-family:var(--font-cyber);color:var(--neon)">${fmt(p.price)}</td><td style="color:${p.stock<10?'var(--gold)':'var(--neon3)'}">${p.stock}</td><td><span class="status-badge ${p.stock>0?'status-active':'status-inactive'}">${p.stock>0?'Идэвхтэй':'Дууссан'}</span></td><td><div style="display:flex;gap:.4rem"><button class="btn btn-outline btn-xs" onclick="openProductModal(${p.id})">✏️</button><button class="btn btn-red btn-xs" onclick="deleteProduct(${p.id})">🗑️</button></div></td></tr>`).join('');
+}
+function renderAdminOrders(){
+  const tb=document.getElementById('adminOrdersTable');if(!tb)return;
+  const orders=[{id:'MNT-3847',user:'Батбаяр М.',items:'ASUS ROG Monitor',total:3500000,pay:'QPay',status:'Хүргэлтэнд'},{id:'MNT-3846',user:'Оюунтуяа Б.',items:'Razer Keyboard',total:450000,pay:'Khan Bank',status:'Боловсруулж байна'},{id:'MNT-3845',user:'Цэрэн Д.',items:'Logitech G Pro',total:280000,pay:'SocialPay',status:'Хүргэгдсэн'},{id:'MNT-3844',user:'Мөнхбаяр Г.',items:'SteelSeries, AMD',total:1670000,pay:'Golomt',status:'Хүргэгдсэн'},{id:'MNT-3843',user:'Энхтуяа С.',items:'Sony WH-1000XM5',total:590000,pay:'QPay',status:'Цуцлагдсан'}];
+  tb.innerHTML=orders.map(o=>`<tr><td style="font-family:var(--font-mono);color:var(--neon);font-size:.8rem">${o.id}</td><td>${o.user}</td><td style="color:var(--text2);font-size:.85rem">${o.items}</td><td style="font-family:var(--font-cyber);color:var(--neon)">${fmt(o.total)}</td><td><span class="tag">${o.pay}</span></td><td><span class="status-badge ${o.status==='Хүргэгдсэн'?'status-active':o.status==='Цуцлагдсан'?'status-inactive':'status-pending'}">${o.status}</span></td><td><button class="btn btn-outline btn-xs" onclick="showNotif('Захиалгын мэдээлэл...','📦')">Харах</button></td></tr>`).join('');
+}
+function renderAdminUsers(){
+  const tb=document.getElementById('adminUsersTable');if(!tb)return;
+  const users=[{id:1,name:'Батбаяр Монгол',email:'bat@gmail.com',phone:'9911-2233',orders:8,spent:4250000,status:'active'},{id:2,name:'Оюунтуяа Болд',email:'oy@gmail.com',phone:'9922-4455',orders:3,spent:1100000,status:'active'},{id:3,name:'Цэрэн Дорж',email:'tseren@gmail.com',phone:'9933-6677',orders:15,spent:8900000,status:'active'},{id:4,name:'Энхтуяа Бат',email:'enkh@gmail.com',phone:'9944-8899',orders:1,spent:280000,status:'inactive'}];
+  tb.innerHTML=users.map(u=>`<tr><td style="font-family:var(--font-mono);color:var(--text2)">#${u.id}</td><td style="font-weight:600">${u.name}</td><td style="color:var(--text2);font-size:.85rem">${u.email}</td><td style="font-family:var(--font-mono);font-size:.85rem">${u.phone}</td><td style="text-align:center">${u.orders}</td><td style="font-family:var(--font-cyber);color:var(--neon)">${fmt(u.spent)}</td><td><span class="status-badge ${u.status==='active'?'status-active':'status-inactive'}">${u.status==='active'?'Идэвхтэй':'Идэвхгүй'}</span></td></tr>`).join('');
+}
+function renderAdminCats(){
+  const g=document.getElementById('adminCatCards');if(!g)return;
+  g.innerHTML=CATEGORIES.map(c=>`<div class="stat-card" style="text-align:center;cursor:pointer"><div style="font-size:2rem;margin-bottom:.5rem">${c.icon}</div><div style="font-weight:600;font-size:.9rem">${c.name}</div><div style="color:var(--neon);font-family:var(--font-cyber);font-size:1.2rem;margin:.3rem 0">${c.count}</div><div style="color:var(--text2);font-size:.75rem">бараа</div><div style="display:flex;gap:.3rem;justify-content:center;margin-top:.7rem"><button class="btn btn-outline btn-xs" onclick="showNotif('Засварлаж байна...','✏️')">Засах</button><button class="btn btn-red btn-xs" onclick="showNotif('Категори устгагдлаа!','🗑️')">Устгах</button></div></div>`).join('');
+}
+function renderDashboardLists(){
+  const ro=document.getElementById('recentOrders');
+  if(ro)ro.innerHTML=['MNT-3847 • Батбаяр • ₮3.5M','MNT-3846 • Оюунтуяа • ₮450K','MNT-3845 • Цэрэн • ₮280K','MNT-3844 • Мөнхбаяр • ₮1.6M'].map(o=>`<div style="font-size:.82rem;color:var(--text2);padding:.4rem 0;border-bottom:1px solid rgba(26,58,92,.4)">${o}</div>`).join('');
+  const tp=document.getElementById('topProducts');
+  if(tp)tp.innerHTML=products.slice(0,4).map(p=>`<div style="display:flex;align-items:center;gap:.5rem;padding:.4rem 0;border-bottom:1px solid rgba(26,58,92,.4)"><span>${p.icon}</span><span style="font-size:.82rem;flex:1;color:var(--text2)">${p.name.substring(0,25)}...</span><span style="font-size:.78rem;color:var(--neon);font-family:var(--font-mono)">${p.reviews}</span></div>`).join('');
+}
+function openProductModal(id=null){
+  editingProductId=id;
+  const modal=document.getElementById('productModal');
+  const title=document.getElementById('modalTitle');
+  if(id){
+    const p=products.find(pr=>pr.id===id);if(!p)return;
+    title.textContent='Бараа Засварлах';
+    document.getElementById('pName').value=p.name;document.getElementById('pCat').value=p.cat;
+    document.getElementById('pPrice').value=p.price;document.getElementById('pDiscount').value=p.discount||0;
+    document.getElementById('pStock').value=p.stock;document.getElementById('pIcon').value=p.icon;
+    document.getElementById('pDesc').value=p.desc;document.getElementById('pImage').value='';
+  }else{
+    title.textContent='Бараа Нэмэх';
+    ['pName','pPrice','pDiscount','pStock','pIcon','pDesc','pImage'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  }
+  modal.classList.remove('hidden');
+}
+function closeProductModal(){document.getElementById('productModal').classList.add('hidden');editingProductId=null;}
+function saveProduct(){
+  const name=document.getElementById('pName').value.trim();
+  const cat=document.getElementById('pCat').value;
+  const price=parseInt(document.getElementById('pPrice').value)||0;
+  const discount=parseInt(document.getElementById('pDiscount').value)||0;
+  const stock=parseInt(document.getElementById('pStock').value)||0;
+  const icon=document.getElementById('pIcon').value||'📦';
+  const desc=document.getElementById('pDesc').value;
+  if(!name||!price){showNotif('Нэр болон үнэ оруулна уу!','⚠️');return;}
+  const catMap={'Гарын самбар':'keyboard','Хулгана':'mouse','Чихэвч':'headset','Монитор':'monitor','PC хэсгүүд':'pc','Гейминг аксессуар':'gaming','Дижитал бараа':'digital','Тех гаджет':'gadget'};
+  if(editingProductId){
+    const p=products.find(pr=>pr.id===editingProductId);
+    if(p){p.name=name;p.cat=cat;p.catId=catMap[cat]||'gadget';p.price=price;p.discount=discount;p.stock=stock;p.icon=icon;p.desc=desc;}
+    showNotif('Бараа шинэчлэгдлээ!','✅');
+  }else{
+    const newId=Math.max(...products.map(p=>p.id))+1;
+    products.push({id:newId,name,cat,catId:catMap[cat]||'gadget',icon,price,oldPrice:null,rating:5,reviews:0,stock,isNew:true,discount,desc,specs:{}});
+    showNotif('Шинэ бараа нэмэгдлээ!','✅');
+  }
+  closeProductModal();renderAdminProducts();renderFeatured();
+  const apc=document.getElementById('adminProductCount');if(apc)apc.textContent=products.length;
+}
+function deleteProduct(id){
+  products=products.filter(p=>p.id!==id);
+  renderAdminProducts();renderFeatured();
+  const apc=document.getElementById('adminProductCount');if(apc)apc.textContent=products.length;
+  showNotif('Бараа устгагдлаа!','🗑️');
+}
+setTimeout(()=>{
+  document.getElementById('loadingScreen').classList.add('hidden');
+  renderCategories();renderFeatured();
+},1600);
+</script>
+</body>
+</html>
